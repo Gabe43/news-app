@@ -6,25 +6,25 @@ import InfiniteScroll from "react-infinite-scroll-component"
 
 
 
-function Component({ category, setProgress }) {
+function Component({ category }) {
     const [item, setItem] = React.useState([])
     const [page, chngePage] = React.useState(1)
     const [loading, setLoading] = React.useState(true)
     const apiKey = process.env.REACT_APP_NEWS_API
     let totalResults = 0
-    
+
 
     async function fetchData(pageNo) {
-        setProgress(10)
+
         let data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=${apiKey}&category=${category}&page=${pageNo}&pageSize=6`)
-        setProgress(30)
+
         let json = await data.json()
-        setProgress(60)
+
         setLoading(false)
         setItem(json.articles)
         totalResults = json.totalResults
         document.title = `${category[0].toUpperCase() + category.slice(1, category.length)} - NewsMonkey`
-        setProgress(100)
+
     }
     React.useEffect(() => {
         fetchData(page)
